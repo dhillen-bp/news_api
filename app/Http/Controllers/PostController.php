@@ -7,7 +7,6 @@ use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use PharIo\Manifest\Author;
 
 class PostController extends Controller
 {
@@ -32,8 +31,16 @@ class PostController extends Controller
             'news_content'  => 'required',
         ]);
 
-        $request['author_id'] = Auth::user()->id;
+        $fileName = '';
 
+        if ($request->file) {
+            $path = $request->file('file')->store('images');
+            $fileName = basename($path);
+
+            $request['image'] = $fileName;
+        }
+
+        $request['author_id'] = Auth::user()->id;
         $post = Post::create($request->all());
 
         return new PostDetailResource($post->loadMissing('author:id,username'));

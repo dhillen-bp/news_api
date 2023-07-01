@@ -20,6 +20,7 @@ class PostDetailResource extends JsonResource
             'id'            => $this->id,
             'title'         => $this->title,
             'news_content'  => $this->news_content,
+            'image'         => $this->image,
             'created_at'    => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
             'updated_at'    => Carbon::parse($this->updated_at)->format('Y-m-d H:i:s'),
             'author_id'     => $this->author_id,
